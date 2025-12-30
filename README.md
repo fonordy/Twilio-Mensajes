@@ -6,7 +6,7 @@
 ---
 
 ## 📖 Descripción del Proyecto
-Este sistema soluciona la necesidad de monitoreo constante de precipitaciones. El script extrae datos meteorológicos, los procesa mediante **Pandas** para identificar umbrales de lluvia y utiliza un servicio de mensajería para notificar al usuario final. El proyecto está optimizado para ejecutarse 24/7 en la nube.
+Este sistema automatiza el monitoreo de precipitaciones para ciudades específicas. El script extrae pronósticos detallados, utiliza **Pandas** para filtrar únicamente las horas con probabilidad de lluvia en un rango diurno (06:00 - 22:00) y notifica al usuario de forma proactiva.
 
 
 
@@ -18,18 +18,19 @@ Este sistema soluciona la necesidad de monitoreo constante de precipitaciones. E
 
 ---
 
-## ⚙️ Características Técnicas
-* **Data Handling:** Uso de la librería **Pandas** para el parseo de JSON y estructuración de pronósticos por horas.
-* **Integración de APIs:** Conexión segura con **WeatherAPI** para obtención de datos y **Twilio SDK** para el envío de mensajes.
-* **Cloud Deployment:** Configurado en una instancia **Amazon EC2** (Ubuntu Server).
-* **Automatización:** Implementación de **Cron Jobs** en Linux para la ejecución programada del script de forma recurrente.
+## ⚙️ Características Técnicas (utils.py)
+* **Data Sourcing:** Conexión con **WeatherAPI** mediante manejo de excepciones y validación de respuestas JSON.
+* **Transformación de Datos:** Procesamiento de listas de diccionarios a **Pandas DataFrames**.
+* **Lógica de Negocio:** Filtrado inteligente de datos para reportar solo eventos de lluvia en horarios relevantes (6 AM a 10 PM).
+* **Integración de Mensajería:** Uso del SDK de **Twilio** para la generación dinámica de cuerpos de mensaje con el reporte del clima.
 
 ---
 
 ## 📂 Estructura del Repositorio
 ```text
 .
-├── main.py               # Lógica principal y conexión de APIs
-├── requirements.txt      # Dependencias (pandas, twilio, requests)
-├── .env.example          # Plantilla para variables de entorno (API Keys)
+├── twilio-script.py      # Flujo de ejecución principal
+├── utils.py              # Funciones de API, Procesamiento de Datos y Envío
+├── twilio_config.py      # Configuración de credenciales (Omitido por seguridad)
+├── requirements.txt      # Dependencias (pandas, twilio, requests, tqdm)
 └── README.md             # Documentación del proyecto
